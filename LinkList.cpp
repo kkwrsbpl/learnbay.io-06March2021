@@ -222,8 +222,45 @@ namespace LinkList
          return loopExist;
       }
 
+      //Leet code problem 142. Linked List Cycle II
+      Node* LoopExistAndFindStartingPointOfLoop(Node* startNode) {
+         Node* slowNode = startNode;
+         Node* fastNode = startNode;
+         while (slowNode != nullptr && fastNode != nullptr && fastNode->nextNode != nullptr)
+         {
+            slowNode = slowNode->nextNode;
+            fastNode = fastNode->nextNode->nextNode;
+            if (slowNode == fastNode)
+            {
+               slowNode = startNode;
+               while (fastNode != slowNode)
+               {
+                  slowNode = slowNode->nextNode;
+                  fastNode = fastNode->nextNode;
+               }
+               return slowNode;
+            }
+         }
 
+         return nullptr;
+      }
 
+      Node* LoopExistThenRemoveLoop(Node* startNode) {
+         Node* slowNode = startNode;
+         Node* fastNode = startNode;
+         Node* lastNode = startNode;
+         while (slowNode != nullptr && fastNode != nullptr && fastNode->nextNode != nullptr)
+         {
+            slowNode = slowNode->nextNode;
+            lastNode = fastNode->nextNode;
+            fastNode = fastNode->nextNode->nextNode;
+            if (slowNode == fastNode)
+            {
+               lastNode->nextNode = nullptr;
+            }
+         }
+         return startNode;
+      }
 
       void printList()
       {
